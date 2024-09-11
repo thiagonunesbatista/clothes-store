@@ -71,7 +71,8 @@ export default function Id({ params }) {
                   />
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className='flex flex-col gap-5'>
+                <p>Descrição: {clothes.description}</p>
                 <p>R$ {clothes.price}</p>
                 <p>Marca: {clothes.clothingBrand.name}</p>
               </CardContent>

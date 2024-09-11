@@ -11,15 +11,6 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue
-// } from "@/components/ui/select";
 
 import Image from "next/image";
 
@@ -28,6 +19,7 @@ interface ClothesCardProps {
     id: number;
     name: string;
     price: number;
+    description: string;
     highlight: boolean;
     photo: string;
     clothingBrand: {
