@@ -23,31 +23,22 @@ export default function Id({ params }) {
 
     if (clothId) {
       const loadSingleClothFromApi = async () => {
-        // const responseFromApi = await fetch(`/${clothId}`);
-        // const parsedResponse = await responseFromApi.json();
+        const url = `http://localhost:3004/clothes/${params.id}`;
 
-        const mockedResponse = {
-          id: 1,
-          name: "Camiseta 1",
-          price: 69,
-          highlight: false,
-          photo:
-            "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png",
-          clothingBrandId: 2,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        };
+        try {
+          const responseFromApi = await fetch(url);
+          const parsedResponse = await responseFromApi.json();
 
-        setClothes(mockedResponse);
-
-        setIsLoading(false);
+          setClothes(parsedResponse);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsLoading(false);
+        }
       };
 
       loadSingleClothFromApi();
     }
-
-    console.log("clothId");
-    console.log(clothId);
   }, [params?.id]);
 
   if (isLoading) {

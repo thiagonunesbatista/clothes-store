@@ -7,4 +7,8 @@ export interface ClothesInterface {
   clothingBrandId: number;
   createdAt: Date;
   updatedAt: Date;
+  clothingBrand: {
+    id: number;
+    name: string;
+  };
 }

@@ -30,6 +30,10 @@ interface ClothesCardProps {
     price: number;
     highlight: boolean;
     photo: string;
+    clothingBrand: {
+      id: number;
+      name: string;
+    };
     clothingBrandId: number;
     createdAt: Date;
     updatedAt: Date;
@@ -37,11 +41,11 @@ interface ClothesCardProps {
 }
 
 export default function ClothesCard({
-  details: { name, photo, price, highlight, id }
+  details: { name, photo, price, highlight, id, clothingBrand }
 }: ClothesCardProps) {
   return (
     <Card
-      className={`w-[350px] ${
+      className={`w-full max-w-[300px] ${
         highlight && "bg-yellow-300"
       } flex flex-col gap-2`}
     >
@@ -54,6 +58,7 @@ export default function ClothesCard({
       </CardHeader>
       <CardContent>
         <p>R$ {price}</p>
+        <p>Marca: {clothingBrand.name}</p>
       </CardContent>
       <CardFooter className='flex justify-between'>
         <Link href={`/${id}`}>
