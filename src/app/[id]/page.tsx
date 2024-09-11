@@ -73,6 +73,7 @@ export default function Id({ params }) {
               </CardHeader>
               <CardContent>
                 <p>R$ {clothes.price}</p>
+                <p>Marca: {clothes.clothingBrand.name}</p>
               </CardContent>
             </Card>
           </div>

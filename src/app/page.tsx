@@ -83,7 +83,7 @@ export default function Home() {
 
         {clothes.length === 0 && (
           <div>
-            <p>Não há roupas cadastradas</p>
+            <p>Não há roupas</p>
           </div>
         )}
 
