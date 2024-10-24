@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Card,
@@ -162,44 +162,56 @@ export default function Id({ params }) {
             </Card>
 
             <div className="mt-8">
-              <h2 className="text-xl font-semibold mb-4">
-                Adicionar Avaliação
-              </h2>
-              <form
-                onSubmit={handleRatingSubmit}
-                className="flex items-center gap-4 mb-4"
-              >
-                <div className="flex">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      className={`cursor-pointer ${
-                        star <= rating
-                          ? "text-yellow-400 fill-current"
-                          : "text-gray-300"
-                      }`}
-                      onClick={() => handleStarClick(star)}
-                    />
-                  ))}
-                </div>
-                <Button type="submit">Enviar Avaliação</Button>
-              </form>
+              {!clothes.ratings.find(
+                (current) => current?.userId === consumerInfo.id
+              ) && (
+                <Fragment>
+                  <h2 className="text-xl font-semibold mb-4">
+                    Adicionar Avaliação
+                  </h2>
+                  <form
+                    onSubmit={handleRatingSubmit}
+                    className="flex items-center gap-4 mb-4"
+                  >
+                    <div className="flex">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          className={`cursor-pointer ${
+                            star <= rating
+                              ? "text-yellow-400 fill-current"
+                              : "text-gray-300"
+                          }`}
+                          onClick={() => handleStarClick(star)}
+                        />
+                      ))}
+                    </div>
+                    <Button type="submit">Enviar Avaliação</Button>
+                  </form>
+                </Fragment>
+              )}
 
-              <h2 className="text-xl font-semibold mb-4">
-                Adicionar Comentário
-              </h2>
-              <form
-                onSubmit={handleCommentSubmit}
-                className="flex flex-col gap-4"
-              >
-                <Textarea
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  placeholder="Escreva seu comentário aqui"
-                  className="w-full"
-                />
-                <Button type="submit">Enviar Comentário</Button>
-              </form>
+              {!clothes.comments.find(
+                (current) => current?.userId === consumerInfo.id
+              ) && (
+                <Fragment>
+                  <h2 className="text-xl font-semibold mb-4">
+                    Adicionar Comentário
+                  </h2>
+                  <form
+                    onSubmit={handleCommentSubmit}
+                    className="flex flex-col gap-4"
+                  >
+                    <Textarea
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      placeholder="Escreva seu comentário aqui"
+                      className="w-full"
+                    />
+                    <Button type="submit">Enviar Comentário</Button>
+                  </form>
+                </Fragment>
+              )}
             </div>
 
             <div className="mt-8">
