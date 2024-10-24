@@ -4,10 +4,19 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**"
-      }
-    ]
-  }
+        hostname: "**",
+      },
+    ],
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: "/login/reset-password",
+        destination: "/login/resetPassword",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

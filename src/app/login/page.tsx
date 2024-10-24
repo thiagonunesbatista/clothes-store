@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useConsumer } from "../context/ConsumerContext";
+import Link from "next/link";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -67,6 +68,7 @@ export default function Login() {
   return (
     <div className="max-w-[500px] mx-auto py-40 flex flex-col gap-3">
       <h1 className="text-2xl font-bold">Faça o Seu Login</h1>
+
       <form className="flex gap-4 flex-col" onSubmit={handleLogin}>
         <Input
           type="email"
@@ -84,6 +86,8 @@ export default function Login() {
 
         <Button type="submit">Login</Button>
       </form>
+
+      <Link href="/login/reset-password">Esqueci a Senha</Link>
     </div>
   );
 }
