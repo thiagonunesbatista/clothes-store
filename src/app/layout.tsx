@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+
 import "./globals.css";
+
+import { ConsumerProvider } from "./context/ConsumerContext";
 
 import Navbar from "@/components/Navbar";
 
@@ -26,11 +29,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
+        <ConsumerProvider>
+          <Navbar />
+        </ConsumerProvider>
         {children}
       </body>
     </html>
