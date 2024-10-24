@@ -35,8 +35,9 @@ export default function RootLayout({
       >
         <ConsumerProvider>
           <Navbar />
+
+          {children}
         </ConsumerProvider>
-        {children}
       </body>
     </html>
   );
