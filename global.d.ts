@@ -1,15 +1,26 @@
-export interface ClothesInterface {
+interface ClothesInterface {
   id: number;
   name: string;
   price: number;
+  description: string;
+  size: string;
   highlight: boolean;
   photo: string;
-  clothingBrandId: number;
-  createdAt: Date;
-  updatedAt: Date;
-  description: string;
   clothingBrand: {
-    id: number;
     name: string;
   };
+  ratings: Array<{
+    id: number;
+    score: number;
+    user: {
+      name: string;
+    };
+  }>;
+  comments: Array<{
+    id: number;
+    content: string;
+    user: {
+      name: string;
+    };
+  }>;
 }

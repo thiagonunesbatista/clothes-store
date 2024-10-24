@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { ClothesInterface } from "../../global";
 import ClothesCard from "@/components/ClothesCard";
 import { Button } from "@/components/ui/button";
 

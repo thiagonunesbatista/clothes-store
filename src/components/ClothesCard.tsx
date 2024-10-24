@@ -1,7 +1,5 @@
 import * as React from "react";
-
 import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,9 +7,8 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from "@/components/ui/card";
-
 import Image from "next/image";
 
 interface ClothesCardProps {
@@ -33,7 +30,7 @@ interface ClothesCardProps {
 }
 
 export default function ClothesCard({
-  details: { name, photo, price, highlight, id, clothingBrand }
+  details: { name, photo, price, highlight, id, clothingBrand },
 }: ClothesCardProps) {
   return (
     <Card
@@ -41,7 +38,7 @@ export default function ClothesCard({
         highlight && "bg-yellow-300"
       } flex flex-col gap-2`}
     >
-      <CardHeader className='flex flex-col gap-2'>
+      <CardHeader className="flex flex-col gap-2">
         <CardTitle>{name}</CardTitle>
 
         <CardDescription>
@@ -52,7 +49,7 @@ export default function ClothesCard({
         <p>R$ {price}</p>
         <p>Marca: {clothingBrand.name}</p>
       </CardContent>
-      <CardFooter className='flex justify-between'>
+      <CardFooter className="flex justify-between">
         <Link href={`/${id}`}>
           <Button>Ver Detalhes</Button>
         </Link>

@@ -23,6 +23,7 @@ export default function Navbar() {
     setIsLogged(false);
     setConsumerInfo({});
     localStorage.removeItem("savedConsumer");
+    window.location.href = "/";
   };
 
   return (
