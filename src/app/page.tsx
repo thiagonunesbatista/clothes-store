@@ -1,13 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import { Input } from "@/components/ui/input";
-
 import { ClothesInterface } from "../../global";
-
 import ClothesCard from "@/components/ClothesCard";
-
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -22,7 +18,6 @@ export default function Home() {
     const parsedResponse = await responseFromApi.json();
 
     setClothes(parsedResponse);
-
     setIsLoading(false);
   };
 
@@ -34,11 +29,10 @@ export default function Home() {
     return <div>Carregando</div>;
   }
 
-  const handleClothesNameChange = (event: InputEvent) => {
-    const element = event.currentTarget as HTMLInputElement;
-    const value = element.value;
-
-    setClothesName(value);
+  const handleClothesNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setClothesName(event.target.value);
   };
 
   const handleClearName = async () => {
@@ -67,13 +61,15 @@ export default function Home() {
     <div>
       <title>Roupa Roupousa - Inicio</title>
 
-      <div className='max-w-[1180px] w-full mx-auto flex gap-10 flex-col flex-flex-wrap py-10 px-10'>
-        <h1 className='text-2xl'>Catálogo de Roupas</h1>
+      <div className="max-w-[1180px] w-full mx-auto flex gap-10 flex-col flex-flex-wrap py-10 px-10">
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl">Catálogo de Roupas</h1>
+        </div>
 
-        <div className='flex gap-2'>
+        <div className="flex gap-2">
           <Input
-            type='text'
-            placeholder='Pesquise por nome da roupa'
+            type="text"
+            placeholder="Pesquise por nome da roupa"
             value={clothesName}
             onChange={handleClothesNameChange}
           />
@@ -88,7 +84,7 @@ export default function Home() {
         )}
 
         {clothes.length > 0 && (
-          <div className='flex gap-6 flex-wrap p-10 justify-center items-center'>
+          <div className="flex gap-6 flex-wrap p-10 justify-center items-center">
             {clothes?.map((currentClothes, index) => (
               <ClothesCard details={currentClothes} key={index} />
             ))}

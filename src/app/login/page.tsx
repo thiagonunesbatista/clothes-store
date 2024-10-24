@@ -1,31 +1,21 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-
 import { Input } from "@/components/ui/input";
-
 import { Button } from "@/components/ui/button";
-
 import { useConsumer } from "../context/ConsumerContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setIsLoading, setConsumerInfo, setIsLogged } = useConsumer();
 
-  const { setIsLoading } = useConsumer();
-
-  const handleEmailChange = (event: InputEvent) => {
-    const element = event.currentTarget as HTMLInputElement;
-    const value = element.value;
-
-    setEmail(value);
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
   };
 
-  const handlePasswordChange = (event: InputEvent) => {
-    const element = event.currentTarget as HTMLInputElement;
-    const value = element.value;
-
-    setPassword(value);
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
   };
 
   const handleLogin = async (event: FormEvent) => {
@@ -33,38 +23,50 @@ export default function Login() {
 
     if (email.length && password.length) {
       try {
-        // setIsLoading(true);
+        setIsLoading(true);
 
         const url = `http://localhost:3004/users/login`;
 
         let loginResult = await fetch(url, {
           method: "POST",
-
           headers: {
             Accept: "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             email,
-            password
-          })
+            password,
+          }),
         });
 
         let parsedLogin = await loginResult.json();
 
-        console.log("parsedLogin");
-        console.log(parsedLogin);
+        if (loginResult.ok) {
+          setConsumerInfo(parsedLogin);
+          setIsLogged(true);
+          localStorage.setItem(
+            "savedConsumer",
+            JSON.stringify({
+              ...parsedLogin,
+              isLogged: true,
+            })
+          );
+          window.location.href = "/";
+        } else {
+          alert("Login failed. Please check your credentials.");
+        }
       } catch (error) {
         console.error(error);
+        alert("An error occurred during login.");
       } finally {
-        // setIsLoading(false);
+        setIsLoading(false);
       }
     }
   };
 
   return (
     <div className="max-w-[500px] mx-auto py-40 flex flex-col gap-3">
-      <h1>Faça o Seu Login</h1>
+      <h1 className="text-2xl font-bold">Faça o Seu Login</h1>
       <form className="flex gap-4 flex-col" onSubmit={handleLogin}>
         <Input
           type="email"
@@ -80,7 +82,7 @@ export default function Login() {
           onChange={handlePasswordChange}
         />
 
-        <Button>Login</Button>
+        <Button type="submit">Login</Button>
       </form>
     </div>
   );
