@@ -1,5 +1,7 @@
 "use client";
 
+import axios from "axios";
+
 import { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
 import {
@@ -43,10 +45,8 @@ export default function Id({ params }) {
         const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes/${params.id}`;
 
         try {
-          const responseFromApi = await fetch(url);
-          const parsedResponse = await responseFromApi.json();
-
-          setClothes(parsedResponse);
+          const responseFromApi = await axios(url);
+          setClothes(responseFromApi.data);
         } catch (error) {
           console.log(error);
         } finally {
@@ -65,27 +65,19 @@ export default function Id({ params }) {
     if (!isLogged || !clothes) return;
 
     try {
-      const response = await fetch(
+      await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/ratings/${clothId}`,
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: consumerInfo.id,
-            score: rating,
-          }),
+          userId: consumerInfo.id,
+          score: rating,
         }
       );
 
-      if (response.ok) {
-        const updatedClothes = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes/${params.id}`
-        ).then((res) => res.json());
-        setClothes(updatedClothes);
-        setRating(0);
-      }
+      const updatedClothes = await axios(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes/${params.id}`
+      );
+      setClothes(updatedClothes.data);
+      setRating(0);
     } catch (error) {
       console.error("Error submitting rating:", error);
     }
@@ -97,27 +89,20 @@ export default function Id({ params }) {
     if (!isLogged || !clothes) return;
 
     try {
-      const response = await fetch(
+      await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/comments/${clothId}`,
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: consumerInfo.id,
-            content: comment,
-          }),
+          userId: consumerInfo.id,
+          content: comment,
         }
       );
 
-      if (response.ok) {
-        const updatedClothes = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes/${params.id}`
-        ).then((res) => res.json());
-        setClothes(updatedClothes);
-        setComment("");
-      }
+      const updatedClothes = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes/${params.id}`
+      );
+
+      setClothes(updatedClothes.data);
+      setComment("");
     } catch (error) {
       console.error("Error submitting comment:", error);
     }

@@ -1,5 +1,7 @@
 "use client";
 
+import axios from "axios";
+
 import { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -43,24 +45,13 @@ export default function Login() {
 
         const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/reset-password`;
 
-        const resetResult = await fetch(url, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            recoveryCode: resetNumber,
-            newPassword,
-          }),
+        await axios.post(url, {
+          email,
+          recoveryCode: resetNumber,
+          newPassword,
         });
 
-        if (resetResult.ok) {
-          window.location.href = "/login";
-        } else {
-          alert("Reset Failed");
-        }
+        window.location.href = "/login";
       } catch (error) {
         console.error(error);
         alert("An error occurred during login.");
@@ -79,24 +70,11 @@ export default function Login() {
 
         const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/request-reset`;
 
-        let resetResult = await fetch(url, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-          }),
+        await axios.post(url, {
+          email,
         });
 
-        let parsedReset = await resetResult.json();
-
-        if (resetResult.ok) {
-          setShowResetNumberInput(true);
-        } else {
-          alert("Login failed. Please check your credentials.");
-        }
+        setShowResetNumberInput(true);
       } catch (error) {
         console.error(error);
         alert("An error occurred during login.");

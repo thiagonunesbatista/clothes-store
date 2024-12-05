@@ -1,5 +1,7 @@
 "use client";
 
+import axios from "axios";
+
 import { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -28,34 +30,21 @@ export default function Login() {
 
         const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/login`;
 
-        let loginResult = await fetch(url, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
+        const loginResult = await axios.post(url, {
+          email,
+          password,
         });
 
-        let parsedLogin = await loginResult.json();
-
-        if (loginResult.ok) {
-          setConsumerInfo(parsedLogin);
-          setIsLogged(true);
-          localStorage.setItem(
-            "savedConsumer",
-            JSON.stringify({
-              ...parsedLogin,
-              isLogged: true,
-            })
-          );
-          window.location.href = "/";
-        } else {
-          alert("Login failed. Please check your credentials.");
-        }
+        setConsumerInfo(loginResult.data);
+        setIsLogged(true);
+        localStorage.setItem(
+          "savedConsumer",
+          JSON.stringify({
+            ...loginResult.data,
+            isLogged: true,
+          })
+        );
+        window.location.href = "/";
       } catch (error) {
         console.error(error);
         alert("An error occurred during login.");

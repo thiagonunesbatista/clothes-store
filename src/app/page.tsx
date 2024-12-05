@@ -1,5 +1,7 @@
 "use client";
 
+import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import ClothesCard from "@/components/ClothesCard";
@@ -13,10 +15,9 @@ export default function Home() {
   const loadClothesFromApi = async () => {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes`;
 
-    const responseFromApi = await fetch(url);
-    const parsedResponse = await responseFromApi.json();
+    const responseFromApi = await axios(url);
 
-    setClothes(parsedResponse);
+    setClothes(responseFromApi.data);
     setIsLoading(false);
   };
 
@@ -45,10 +46,8 @@ export default function Home() {
 
       const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes/pesquisa/${clothesName}`;
 
-      const responseFromApi = await fetch(url);
-      const parsedResponse = await responseFromApi.json();
-
-      setClothes(parsedResponse);
+      const responseFromApi = await axios(url);
+      setClothes(responseFromApi.data);
     } catch (error) {
       alert("Erro");
     } finally {
