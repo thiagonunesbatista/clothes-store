@@ -41,7 +41,7 @@ export default function Login() {
       try {
         setIsLoading(true);
 
-        const url = `http://localhost:3004/users/reset-password`;
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/reset-password`;
 
         const resetResult = await fetch(url, {
           method: "POST",
@@ -77,7 +77,7 @@ export default function Login() {
       try {
         setIsLoading(true);
 
-        const url = `http://localhost:3004/users/request-reset`;
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/request-reset`;
 
         let resetResult = await fetch(url, {
           method: "POST",

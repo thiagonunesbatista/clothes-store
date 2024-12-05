@@ -40,7 +40,7 @@ export default function Id({ params }) {
 
     if (clothId) {
       const loadSingleClothFromApi = async () => {
-        const url = `http://localhost:3004/clothes/${params.id}`;
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes/${params.id}`;
 
         try {
           const responseFromApi = await fetch(url);
@@ -65,20 +65,23 @@ export default function Id({ params }) {
     if (!isLogged || !clothes) return;
 
     try {
-      const response = await fetch(`http://localhost:3004/ratings/${clothId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: consumerInfo.id,
-          score: rating,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/ratings/${clothId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: consumerInfo.id,
+            score: rating,
+          }),
+        }
+      );
 
       if (response.ok) {
         const updatedClothes = await fetch(
-          `http://localhost:3004/clothes/${params.id}`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes/${params.id}`
         ).then((res) => res.json());
         setClothes(updatedClothes);
         setRating(0);
@@ -95,7 +98,7 @@ export default function Id({ params }) {
 
     try {
       const response = await fetch(
-        `http://localhost:3004/comments/${clothId}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/comments/${clothId}`,
         {
           method: "POST",
           headers: {
@@ -110,7 +113,7 @@ export default function Id({ params }) {
 
       if (response.ok) {
         const updatedClothes = await fetch(
-          `http://localhost:3004/clothes/${params.id}`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes/${params.id}`
         ).then((res) => res.json());
         setClothes(updatedClothes);
         setComment("");

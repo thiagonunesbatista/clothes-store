@@ -26,7 +26,7 @@ export default function Login() {
       try {
         setIsLoading(true);
 
-        const url = `http://localhost:3004/users/login`;
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/login`;
 
         let loginResult = await fetch(url, {
           method: "POST",

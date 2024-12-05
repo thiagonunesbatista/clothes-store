@@ -11,7 +11,7 @@ export default function Home() {
   const [clothesName, setClothesName] = useState("");
 
   const loadClothesFromApi = async () => {
-    const url = "http://localhost:3004/clothes";
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes`;
 
     const responseFromApi = await fetch(url);
     const parsedResponse = await responseFromApi.json();
@@ -43,7 +43,7 @@ export default function Home() {
     try {
       setIsLoading(true);
 
-      const url = `http://localhost:3004/clothes/pesquisa/${clothesName}`;
+      const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/clothes/pesquisa/${clothesName}`;
 
       const responseFromApi = await fetch(url);
       const parsedResponse = await responseFromApi.json();
